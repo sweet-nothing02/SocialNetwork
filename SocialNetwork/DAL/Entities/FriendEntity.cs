@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.DAL.Entities
 {
-    class FriendEntity
+    /// <summary>
+    /// Сущность друга
+    /// </summary>
+    public class FriendEntity
     {
         public int id { get; set; }
         public int userId { get; set; }

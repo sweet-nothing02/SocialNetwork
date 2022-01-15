@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.DAL.Entities
 {
+    /// <summary>
+    /// Сущность сообщения
+    /// </summary>
     public class MessageEntity
     {
         public int id { get; set; }
