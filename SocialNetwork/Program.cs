@@ -6,7 +6,10 @@ namespace SocialNetwork
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Итак, поехали!");
+            while (true)
+            {
+                Console.WriteLine("Добро пожаловать в социальную сеть!");
+            }
         }
     }
 }
