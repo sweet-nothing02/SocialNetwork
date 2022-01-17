@@ -32,13 +32,13 @@ namespace SocialNetwork.BLL.Services
                 throw new ArgumentNullException();
 
             if (userRegistrationData.Password.Length < 8)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Пароль должен быть не короче 8 символов!");
 
             if (!new EmailAddressAttribute().IsValid(userRegistrationData.Email))
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Email неверного формата!");
 
             if (userRepository.FindByEmail(userRegistrationData.Email) != null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Данный email уже зарегистрирован в системе!");
 
             var userEntity = new UserEntity()
             {
