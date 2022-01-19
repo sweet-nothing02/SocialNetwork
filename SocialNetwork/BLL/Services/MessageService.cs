@@ -30,10 +30,13 @@ namespace SocialNetwork.BLL.Services
                 throw new Exception("Длина сообщения не должна быть больше 5000 символов");
             if (!new EmailAddressAttribute().IsValid(messageData.RecipientEmail))
                 throw new Exception("Введен email неверного формата...");
+            var recipient = new UserRepository();
+            if (recipient.FindByEmail(messageData.RecipientEmail) == null)
+                throw new Exception("Пользователь с введенным email не найден...");
 
             var messageEntity = new MessageEntity()
             {
-
+                content = messageData.Message,
             }
 
         }
