@@ -1,5 +1,6 @@
 ﻿using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
+using SocialNetwork.PLL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,10 @@ namespace SocialNetwork.PLL.Views
 
             try
             {
+                messageService.SendMessage(messageSendingData);
+
+                SuccessMessage.Show("Сообщение успешно отправлено!");
+
 
             }
             catch
