@@ -40,9 +40,14 @@ namespace SocialNetwork.BLL.Services
             friendRepository.Create(friendEntity);
         }
 
-        public void DeleteFromFriends()
+        public void DeleteFromFriends(string email)
         {
-
+            if (String.IsNullOrEmpty(email))
+                throw new ArgumentNullException();
+            if (!new EmailAddressAttribute().IsValid(email))
+                throw new ArgumentNullException();
+            if (userRepository.FindByEmail(email) == null)
+                throw new UserNotFoundException();
         }
 
         public IEnumerable<Friend> GetFriends()
