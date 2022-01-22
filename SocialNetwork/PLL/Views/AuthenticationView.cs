@@ -28,23 +28,29 @@ namespace SocialNetwork.PLL.Views
             Console.Write("Введите пароль: ");
             authenticationData.Password = Console.ReadLine();
 
-            try
-            {
-                var user = this.userService.Authenticate(authenticationData);
+            var user = this.userService.Authenticate(authenticationData);
 
-                SuccessMessage.Show("Вы успешно вошли в социальную сеть!");
-                SuccessMessage.Show($"Добро пожаловать, {user.FirstName}");
+            SuccessMessage.Show("Вы успешно вошли в социальную сеть!");
+            SuccessMessage.Show($"Добро пожаловать, {user.FirstName}");
 
-                Program.userMenuView.Show(user);
-            }
-            catch(AuthenticationException ex)
-            {
-                AlertMessage.Show(ex.NewMessage);
-            }
-            catch (Exception)
-            {
-                AlertMessage.Show("Произошла неизвестная ошибка...");
-            }
+            Program.userMenuView.Show(user);
+            //try
+            //{
+            //    var user = this.userService.Authenticate(authenticationData);
+
+            //    SuccessMessage.Show("Вы успешно вошли в социальную сеть!");
+            //    SuccessMessage.Show($"Добро пожаловать, {user.FirstName}");
+
+            //    Program.userMenuView.Show(user);
+            //}
+            //catch(AuthenticationException ex)
+            //{
+            //    AlertMessage.Show(ex.NewMessage);
+            //}
+            //catch (Exception)
+            //{
+            //    AlertMessage.Show("Произошла неизвестная ошибка...");
+            //}
         }
     }
 }

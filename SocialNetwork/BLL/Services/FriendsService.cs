@@ -15,13 +15,11 @@ namespace SocialNetwork.BLL.Services
     {
         IFriendRepository friendRepository;
         IUserRepository userRepository;
-        UserService userService;
 
         public FriendsService()
         {
             friendRepository = new FriendRepository();
             userRepository = new UserRepository();
-            userService = new UserService();
         }
 
         public void AddToFriends(FriendAddingData friendAddingData)

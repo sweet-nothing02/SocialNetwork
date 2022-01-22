@@ -13,7 +13,7 @@ namespace SocialNetwork.DAL.Repositories
     {
         protected T QueryFirstOrDefault<T>(string sql, object parameters = null)
         {
-            using(var connection = CreateConnection())
+            using (var connection = CreateConnection())
             {
                 connection.Open();
                 return connection.QueryFirstOrDefault<T>(sql, parameters);
@@ -22,7 +22,7 @@ namespace SocialNetwork.DAL.Repositories
 
         protected List<T> Query<T>(string sql, object parameters = null)
         {
-            using(var connection = CreateConnection())
+            using (var connection = CreateConnection())
             {
                 connection.Open();
                 return connection.Query<T>(sql, parameters).ToList();
@@ -31,7 +31,7 @@ namespace SocialNetwork.DAL.Repositories
 
         protected int Execute(string sql, object parameters = null)
         {
-            using(var connection = CreateConnection())
+            using (var connection = CreateConnection())
             {
                 connection.Open();
                 return connection.Execute(sql, parameters);
