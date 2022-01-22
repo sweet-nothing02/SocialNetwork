@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.PLL.Views
 {
-    class UserProfileMenu
+    public class UserDataUpdateView
     {
     }
 }

@@ -3,92 +3,51 @@ using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
 using SocialNetwork.DAL.Entities;
 using SocialNetwork.DAL.Repositories;
+using SocialNetwork.PLL.Views;
 
 namespace SocialNetwork
 {
     class Program
     {
-        public static UserService userService = new UserService();
+        static MessageService messageService;
+        static UserService userService;
+        static FriendsService friendsService;
+
+        public static MainView mainView;
+        public static RegistrationView registrationView;
+        public static AuthenticationView authenticationView;
+        public static UserMenuView userMenuView;
+        public static UserInfoView userInfoView;
+        public static UserDataUpdateView userDataUpdateView;
+        public static MessageSendingView messageSendingView;
+        public static UserIncomingMessageView userIncomingMessageView;
+        public static UserOutgoingMessageView userOutgoingMessageView;
+        public static FriendAddingView friendAddingView;
+        public static FriendDeletingView friendDeletingView;
+        public static FriendsView friendsView;
         static void Main(string[] args)
         {
-            Console.WriteLine("Добро пожаловать в социальную сеть!");
+            userService = new UserService();
+            messageService = new MessageService();
+            friendsService = new FriendsService();
+
+            mainView = new MainView();
+            registrationView = new RegistrationView(userService);
+            authenticationView = new AuthenticationView(userService);
+            userMenuView = new UserMenuView();
+            userInfoView = new UserInfoView();
+            userDataUpdateView = new UserDataUpdateView();
+            messageSendingView = new MessageSendingView(userService, messageService);
+            userIncomingMessageView = new UserIncomingMessageView();
+            userOutgoingMessageView = new UserOutgoingMessageView();
+            friendsView = new FriendsView();
+            friendAddingView = new FriendAddingView();
+            friendDeletingView = new FriendDeletingView(friendsService, userService);
 
             while (true)
             {
-                Console.WriteLine("Войти в социальную сеть: нажмите 1");
-                Console.WriteLine("Вы здесь впервые? Зарегистрируйтесь, нажав 2");
-                switch (Console.ReadLine())
-                {
-                    case "1":
-                        {
-                            var authenticationData = new UserAuthenticationData();
-
-                            Console.Write("Введите почтовый адрес: ");
-                            authenticationData.Email = Console.ReadLine();
-                            Console.Write("Введите пароль: ");
-                            authenticationData.Password = Console.ReadLine();
-
-                            try
-                            {
-                                User user = userService.Authenticate(authenticationData);
-
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine($"Вы успешно вошли в сеть! Добро пожаловать, {user.FirstName}");
-                                Console.ResetColor();
-
-                                while (true)
-                                {
-                                    Console.WriteLine("Посмотреть мой профиль (нажмите 1)");
-                                    Console.WriteLine("Редактировать профиль (нажмите 2)");
-                                    Console.WriteLine("Добавить в друзья (нажмите 3)");
-                                    Console.WriteLine("Написать сообщение (нажмите 4)");
-                                    Console.WriteLine("Выйти из профиля (нажмите 5)");
-                                    Console.WriteLine("Посмотреть информацию о профиле (нажмите 6)");
-
-                                    switch (Console.ReadLine())
-                                    {
-
-                                    }
-                                }
-
-                            }
-                            catch
-                            {
-
-                            }
-                        }
-
-                }
-                try
-                {
-                    Console.WriteLine("Для регистрации введите имя: ");
-                    string firstname = Console.ReadLine();
-                    Console.WriteLine("Введите фамилию: ");
-                    string lastname = Console.ReadLine();
-                    Console.WriteLine("Введите пароль: ");
-                    string password = Console.ReadLine();
-                    Console.WriteLine("Введите email: ");
-                    string email = Console.ReadLine();
-
-                    UserRegistrationData userData = new UserRegistrationData()
-                    {
-                        FirstName = firstname,
-                        LastName = lastname,
-                        Password = password,
-                        Email = email
-                    };
-
-                    UserService service = new UserService();
-                    service.Register(userData);
-
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                
+                mainView.Show();
             }
-
         }
     }
 }

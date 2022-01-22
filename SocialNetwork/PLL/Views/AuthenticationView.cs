@@ -1,4 +1,5 @@
-﻿using SocialNetwork.BLL.Models;
+﻿using SocialNetwork.BLL.Exceptions;
+using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
 using SocialNetwork.PLL.Helpers;
 using System;
@@ -34,11 +35,15 @@ namespace SocialNetwork.PLL.Views
                 SuccessMessage.Show("Вы успешно вошли в социальную сеть!");
                 SuccessMessage.Show($"Добро пожаловать, {user.FirstName}");
 
-                
+                Program.userMenuView.Show(user);
             }
-            catch
+            catch(AuthenticationException ex)
             {
-
+                AlertMessage.Show(ex.NewMessage);
+            }
+            catch (Exception)
+            {
+                AlertMessage.Show("Произошла неизвестная ошибка...");
             }
         }
     }

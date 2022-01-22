@@ -29,7 +29,7 @@ namespace SocialNetwork.BLL.Services
             if (!new EmailAddressAttribute().IsValid(messageSendingData.RecipientEmail))
                 throw new ArgumentNullException();
             if (userRepository.FindByEmail(messageSendingData.RecipientEmail) == null)
-                throw new UserNotFoundException();
+                throw new UserNotFoundException("bhb");
             if (String.IsNullOrEmpty(messageSendingData.Content))
                 throw new ArgumentNullException();
             if (messageSendingData.Content.Length > 5000)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.PLL.Views
 {
-    public class FriendAddingView
+    public class UserOutgoingMessageView
     {
     }
 }

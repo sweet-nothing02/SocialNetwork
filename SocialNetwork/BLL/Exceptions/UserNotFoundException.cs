@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Exceptions
 {
-    public class UserNotFoundException : Exception
+    public class UserNotFoundException : NetworkException
     {
-
+        public UserNotFoundException(string message) : base(message)
+        {
+            NewMessage = String.Concat("Произошла ошибка... ", message);
+        }
     }
 }

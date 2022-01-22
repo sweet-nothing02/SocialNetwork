@@ -35,7 +35,7 @@ namespace SocialNetwork.BLL.Services
                 throw new ArgumentNullException();
 
             if (userRegistrationData.Password.Length < 8)
-                throw new ArgumentNullException("Пароль должен быть не короче 8 символов!");
+                throw new WrongPasswordException("Пароль должен быть не короче 8 символов!");
 
             if (!new EmailAddressAttribute().IsValid(userRegistrationData.Email))
                 throw new ArgumentNullException("Email неверного формата!");
@@ -59,10 +59,10 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
 
-            if (findUserEntity is null) throw new UserNotFoundException();
+            if (findUserEntity is null) throw new UserNotFoundException("hn");
 
             if (findUserEntity.password != userAuthenticationData.Password)
-                throw new WrongPasswordException();
+                throw new WrongPasswordException("gvgv");
 
             return ConstructUserModel(findUserEntity);
         }
@@ -71,7 +71,7 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindByEmail(email);
 
-            if (findUserEntity is null) throw new UserNotFoundException();
+            if (findUserEntity is null) throw new UserNotFoundException("j");
 
             return ConstructUserModel(findUserEntity);
         }
@@ -80,7 +80,7 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindById(id);
 
-            if (findUserEntity is null) throw new UserNotFoundException();
+            if (findUserEntity is null) throw new UserNotFoundException("h");
 
             return ConstructUserModel(findUserEntity);
         }
