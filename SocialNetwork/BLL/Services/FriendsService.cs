@@ -15,11 +15,13 @@ namespace SocialNetwork.BLL.Services
     {
         IFriendRepository friendRepository;
         IUserRepository userRepository;
+        UserService userService;
 
         public FriendsService()
         {
             friendRepository = new FriendRepository();
             userRepository = new UserRepository();
+            userService = new UserService();
         }
 
         public void AddToFriends(FriendAddingData friendAddingData)
@@ -29,7 +31,7 @@ namespace SocialNetwork.BLL.Services
             if (!new EmailAddressAttribute().IsValid(friendAddingData.FriendEmail))
                 throw new ArgumentNullException();
             if (userRepository.FindByEmail(friendAddingData.FriendEmail) == null)
-                throw new UserNotFoundException("n");
+                throw new UserNotFoundException();
 
             var friendEntity = new FriendEntity()
             {
@@ -47,7 +49,7 @@ namespace SocialNetwork.BLL.Services
             if (!new EmailAddressAttribute().IsValid(email))
                 throw new ArgumentNullException();
             if (userRepository.FindByEmail(email) == null)
-                throw new UserNotFoundException("h");
+                throw new UserNotFoundException();
 
             friendRepository.Delete(userRepository.FindByEmail(email).id);
         }
@@ -57,11 +59,9 @@ namespace SocialNetwork.BLL.Services
             var friends = new List<Friend>();
 
             friendRepository.FindAllByUserId(user_id).ToList().ForEach(f =>
-            {
-                friends.Add(new Friend(f.id,
-                    userRepository.FindById(f.userId).email, userRepository.FindById(f.friendId).email));
-            });
-
+            friends.Add(new Friend(f.id, 
+            userRepository.FindById(f.userId).email, userRepository.FindById(f.friendId).email)));
+            
             return friends;
         }
     }

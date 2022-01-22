@@ -15,10 +15,12 @@ namespace SocialNetwork.BLL.Services
     {
         IUserRepository userRepository;
         MessageService messageService;
+        FriendsService friendsService;
         public UserService()
         {
             userRepository = new UserRepository();
             messageService = new MessageService();
+            friendsService = new FriendsService();
         }
         public void Register(UserRegistrationData userRegistrationData)
         {
@@ -59,7 +61,7 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
 
-            if (findUserEntity is null) throw new UserNotFoundException("hn");
+            if (findUserEntity is null) throw new UserNotFoundException();
 
             if (findUserEntity.password != userAuthenticationData.Password)
                 throw new WrongPasswordException("gvgv");
@@ -71,7 +73,7 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindByEmail(email);
 
-            if (findUserEntity is null) throw new UserNotFoundException("j");
+            if (findUserEntity is null) throw new UserNotFoundException();
 
             return ConstructUserModel(findUserEntity);
         }
@@ -80,7 +82,7 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindById(id);
 
-            if (findUserEntity is null) throw new UserNotFoundException("h");
+            if (findUserEntity is null) throw new UserNotFoundException();
 
             return ConstructUserModel(findUserEntity);
         }
@@ -110,6 +112,8 @@ namespace SocialNetwork.BLL.Services
 
             var outgoingMessages = messageService.GetOutcomingMessagesByUserId(userEntity.id);
 
+            var friends = friendsService.GetFriendsByUserId(userEntity.id);
+
             return new User(userEntity.id,
                 userEntity.firstname,
                 userEntity.lastname,
@@ -119,7 +123,8 @@ namespace SocialNetwork.BLL.Services
                 userEntity.favorite_movie,
                 userEntity.favorite_book,
                 incomingMessages,
-                outgoingMessages);
+                outgoingMessages,
+                friends);
         }
     }
 }

@@ -34,14 +34,14 @@ namespace SocialNetwork
             mainView = new MainView();
             registrationView = new RegistrationView(userService);
             authenticationView = new AuthenticationView(userService);
-            userMenuView = new UserMenuView();
+            userMenuView = new UserMenuView(userService);
             userInfoView = new UserInfoView();
-            userDataUpdateView = new UserDataUpdateView();
+            userDataUpdateView = new UserDataUpdateView(userService);
             messageSendingView = new MessageSendingView(userService, messageService);
             userIncomingMessageView = new UserIncomingMessageView();
             userOutgoingMessageView = new UserOutgoingMessageView();
-            friendsView = new FriendsView();
-            friendAddingView = new FriendAddingView();
+            friendsView = new FriendsView(friendsService, userService);
+            friendAddingView = new FriendAddingView(friendsService, userService);
             friendDeletingView = new FriendDeletingView(friendsService, userService);
 
             while (true)

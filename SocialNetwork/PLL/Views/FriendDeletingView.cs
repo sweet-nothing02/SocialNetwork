@@ -1,5 +1,7 @@
-﻿using SocialNetwork.BLL.Models;
+﻿using SocialNetwork.BLL.Exceptions;
+using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
+using SocialNetwork.PLL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,23 @@ namespace SocialNetwork.PLL.Views
         public void Show(User user)
         {
             Console.Write("Введите email друга, которого хотите удалить: ");
-
+            string email = Console.ReadLine();
+            try
+            {
+                friendsService.DeleteFromFriends(email);
+            }
+            catch (ArgumentNullException)
+            {
+                AlertMessage.Show("Введено значение неверного формата...");
+            }
+            catch (UserNotFoundException)
+            {
+                AlertMessage.Show("Пользователь не найден...");
+            }
+            catch(Exception)
+            {
+                AlertMessage.Show("Произошла ошибка");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SocialNetwork.BLL.Models;
+﻿using SocialNetwork.BLL.Exceptions;
+using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
 using SocialNetwork.PLL.Helpers;
 using System;
@@ -38,11 +39,19 @@ namespace SocialNetwork.PLL.Views
 
                 SuccessMessage.Show("Сообщение успешно отправлено!");
 
-
+                user = userService.FindById(user.Id);
             }
-            catch
+            catch (MessageException ex)
             {
-
+                AlertMessage.Show(ex.NewMessage);
+            }
+            catch(UserNotFoundException)
+            {
+                AlertMessage.Show("Пользователь не найден...");
+            }
+            catch (Exception)
+            {
+                AlertMessage.Show("Произошла ошибка...");
             }
         }
     }

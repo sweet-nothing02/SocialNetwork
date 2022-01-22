@@ -19,6 +19,7 @@ namespace SocialNetwork.BLL.Models
 
         public IEnumerable<Message> IncomingMessages { get; }
         public IEnumerable<Message> OutgoingMessages { get; }
+        public IEnumerable<Friend> Friends { get; }
 
 
         public User(
@@ -31,7 +32,8 @@ namespace SocialNetwork.BLL.Models
             string favoriteMovie,
             string favoriteBook,
             IEnumerable<Message> incomingMessages,
-            IEnumerable<Message> outgoingMessages)
+            IEnumerable<Message> outgoingMessages,
+            IEnumerable<Friend> friends)
         {
             Id = id;
             FirstName = firstName;
@@ -43,6 +45,7 @@ namespace SocialNetwork.BLL.Models
             FavoriteBook = favoriteBook;
             IncomingMessages = incomingMessages;
             OutgoingMessages = outgoingMessages;
+            Friends = friends;
         }
     }
 }
