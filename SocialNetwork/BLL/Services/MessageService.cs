@@ -15,61 +15,62 @@ namespace SocialNetwork.BLL.Services
     {
         IMessageRepository messageRepository;
         IUserRepository userRepository;
-
         public MessageService()
         {
-            messageRepository = new MessageRepository();
             userRepository = new UserRepository();
+            messageRepository = new MessageRepository();
+        }
+
+        public IEnumerable<Message> GetIncomingMessagesByUserId(int recipientId)
+        {
+            var messages = new List<Message>();
+
+            messageRepository.FindByRecipientId(recipientId).ToList().ForEach(m =>
+            {
+                var senderUserEntity = userRepository.FindById(m.sender_id);
+                var recipientUserEntity = userRepository.FindById(m.recipient_id);
+
+                messages.Add(new Message(m.id, m.content, senderUserEntity.email, recipientUserEntity.email));
+            });
+
+            return messages;
+        }
+
+        public IEnumerable<Message> GetOutcomingMessagesByUserId(int senderId)
+        {
+            var messages = new List<Message>();
+
+            messageRepository.FindBySenderId(senderId).ToList().ForEach(m =>
+            {
+                var senderUserEntity = userRepository.FindById(m.sender_id);
+                var recipientUserEntity = userRepository.FindById(m.recipient_id);
+
+                messages.Add(new Message(m.id, m.content, senderUserEntity.email, recipientUserEntity.email));
+            });
+
+            return messages;
         }
 
         public void SendMessage(MessageSendingData messageSendingData)
         {
-            if (String.IsNullOrEmpty(messageSendingData.RecipientEmail))
-                throw new ArgumentNullException();
-            if (!new EmailAddressAttribute().IsValid(messageSendingData.RecipientEmail))
-                throw new ArgumentNullException();
-            if (userRepository.FindByEmail(messageSendingData.RecipientEmail) == null)
-                throw new MessageException("Пользователя с введенным email не существует");
             if (String.IsNullOrEmpty(messageSendingData.Content))
-                throw new MessageException("Сообщение не должно быть пустым");
+                throw new ArgumentNullException();
+
             if (messageSendingData.Content.Length > 5000)
-                throw new MessageException("Длина сообщения не должна превышать 5000 символов!");
+                throw new ArgumentOutOfRangeException();
+
+            var findUserEntity = this.userRepository.FindByEmail(messageSendingData.RecipientEmail);
+            if (findUserEntity is null) throw new UserNotFoundException();
 
             var messageEntity = new MessageEntity()
             {
                 content = messageSendingData.Content,
-                senderId = messageSendingData.SenderId,
-                recipientId = userRepository.FindByEmail(messageSendingData.RecipientEmail).id
+                sender_id = messageSendingData.SenderId,
+                recipient_id = findUserEntity.id
             };
 
-            if(this.messageRepository.Create(messageEntity) == 0)
+            if (this.messageRepository.Create(messageEntity) == 0)
                 throw new Exception();
-        }
-
-        public IEnumerable<Message> GetIncomingMessagesByUserId(int recipient_Id)
-        {
-            var messages = new List<Message>();
-
-            messageRepository.FindByRecipientId(recipient_Id).ToList().ForEach(m =>
-            {
-                messages.Add(new Message(m.id, m.content,
-                    userRepository.FindById(m.senderId).email, userRepository.FindById(m.recipientId).email));
-            });
-
-            return messages;
-        }
-
-        public IEnumerable<Message> GetOutcomingMessagesByUserId(int sender_id)
-        {
-            var messages = new List<Message>();
-
-            messageRepository.FindBySenderId(sender_id).ToList().ForEach(m =>
-            {
-                messages.Add(new Message(m.id, m.content,
-                    userRepository.FindById(m.senderId).email, userRepository.FindById(m.recipientId).email));
-            });
-
-            return messages;
         }
     }
 }

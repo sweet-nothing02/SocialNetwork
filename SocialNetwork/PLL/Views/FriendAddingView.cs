@@ -29,32 +29,32 @@ namespace SocialNetwork.PLL.Views
 
             friendAddingData.UserId = user.Id;
 
+            //friendsService.AddToFriends(friendAddingData);
 
-            friendsService.AddToFriends(friendAddingData);
+            //SuccessMessage.Show($"Пользователь с почтовым адресом {friendAddingData.FriendEmail} добавлен в друзья");
 
-            SuccessMessage.Show($"Пользователь с почтовым адресом {friendAddingData.FriendEmail} добавлен в друзья");
+            //user = userService.FindById(user.Id);
 
-            user = userService.FindById(user.Id);
-            //try
-            //{
-            //    friendsService.AddToFriends(friendAddingData);
+            try
+            {
+                friendsService.AddToFriends(friendAddingData);
 
-            //    SuccessMessage.Show($"Пользователь с почтовым адресом {friendAddingData.FriendEmail} добавлен в друзья");
+                SuccessMessage.Show($"Пользователь с почтовым адресом {friendAddingData.FriendEmail} добавлен в друзья");
 
-            //    user = userService.FindById(user.Id);
-            //}
-            //catch(ArgumentNullException)
-            //{
-            //    AlertMessage.Show("Введено значение неверного формата...");
-            //}
-            //catch(UserNotFoundException)
-            //{
-            //    AlertMessage.Show("Пользователь с");
-            //}
-            //catch (Exception)
-            //{
-            //    AlertMessage.Show("Произошла неизвестная ошибка...");
-            //}
+                user = userService.FindById(user.Id);
+            }
+            catch (ArgumentNullException)
+            {
+                AlertMessage.Show("Введено значение неверного формата...");
+            }
+            catch (UserNotFoundException)
+            {
+                AlertMessage.Show("Пользователь с");
+            }
+            catch (Exception)
+            {
+                AlertMessage.Show("Произошла неизвестная ошибка...");
+            }
         }
     }
 }

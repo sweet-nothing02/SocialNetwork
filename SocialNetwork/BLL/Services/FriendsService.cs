@@ -33,8 +33,8 @@ namespace SocialNetwork.BLL.Services
 
             var friendEntity = new FriendEntity()
             {
-                userId = friendAddingData.UserId,
-                friendId = userRepository.FindByEmail(friendAddingData.FriendEmail).id
+                user_id = friendAddingData.UserId,
+                friend_id = userRepository.FindByEmail(friendAddingData.FriendEmail).id
             };
 
             friendRepository.Create(friendEntity);
@@ -52,13 +52,13 @@ namespace SocialNetwork.BLL.Services
             friendRepository.Delete(userRepository.FindByEmail(email).id);
         }
 
-        public IEnumerable<Friend> GetFriendsByUserId(int user_id)
+        public IEnumerable<Friend> GetFriendsByUserId(int userId)
         {
             var friends = new List<Friend>();
 
-            friendRepository.FindAllByUserId(user_id).ToList().ForEach(f =>
+            friendRepository.FindAllByUserId(userId).ToList().ForEach(f =>
             friends.Add(new Friend(f.id, 
-            userRepository.FindById(f.userId).email, userRepository.FindById(f.friendId).email)));
+            userRepository.FindById(f.user_id).email, userRepository.FindById(f.friend_id).email)));
             
             return friends;
         }

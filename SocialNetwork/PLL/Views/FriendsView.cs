@@ -37,9 +37,9 @@ namespace SocialNetwork.PLL.Views
 
             Console.WriteLine();
             Console.WriteLine("Удалить друга (нажмите 1)");
+            Console.WriteLine("Выйти (любая другая клавиша)");
             if (Console.ReadLine() == "1")
                 Program.friendDeletingView.Show(user);
-            Console.WriteLine("Выйти (любая другая клавиша)");
         }
     }
 }

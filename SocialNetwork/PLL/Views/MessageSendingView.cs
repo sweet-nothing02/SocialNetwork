@@ -33,32 +33,32 @@ namespace SocialNetwork.PLL.Views
 
             messageSendingData.SenderId = user.Id;
 
+            //messageService.SendMessage(messageSendingData);
 
-            messageService.SendMessage(messageSendingData);
+            //SuccessMessage.Show("Сообщение успешно отправлено!");
 
-            SuccessMessage.Show("Сообщение успешно отправлено!");
+            //user = userService.FindById(user.Id);
 
-            user = userService.FindById(user.Id);
-            //try
-            //{
-            //    messageService.SendMessage(messageSendingData);
+            try
+            {
+                messageService.SendMessage(messageSendingData);
 
-            //    SuccessMessage.Show("Сообщение успешно отправлено!");
+                SuccessMessage.Show("Сообщение успешно отправлено!");
 
-            //    user = userService.FindById(user.Id);
-            //}
-            //catch (MessageException ex)
-            //{
-            //    AlertMessage.Show(ex.NewMessage);
-            //}
-            //catch(UserNotFoundException)
-            //{
-            //    AlertMessage.Show("Пользователь не найден...");
-            //}
-            //catch (Exception)
-            //{
-            //    AlertMessage.Show("Произошла ошибка...");
-            //}
+                user = userService.FindById(user.Id);
+            }
+            catch (MessageException ex)
+            {
+                AlertMessage.Show(ex.NewMessage);
+            }
+            catch (UserNotFoundException)
+            {
+                AlertMessage.Show("Пользователь не найден...");
+            }
+            catch (Exception)
+            {
+                AlertMessage.Show("Произошла ошибка...");
+            }
         }
     }
 }
