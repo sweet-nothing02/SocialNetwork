@@ -11,8 +11,8 @@ namespace SocialNetwork.DAL.Repositories
     {
         public int Create(UserEntity userEntity)
         {
-            return Execute("insert into users (firstname, lastname, password, email) values (:firstname, :lastname, :password, :email)", 
-                userEntity);
+            return Execute(@"insert into users (firstname,lastname,password,email) 
+                             values (:firstname,:lastname,:password,:email)", userEntity);
         }
 
         public IEnumerable<UserEntity> FindAll()
@@ -33,7 +33,7 @@ namespace SocialNetwork.DAL.Repositories
         public int Update(UserEntity userEntity)
         {
             return Execute(@"update users set firstname = :firstname, lastname = :lastname, password = :password, email = :email,
-photo = :photo, favorite_movie = :favorite_movie, favorite_book = :favorite_book where id = :id", userEntity);
+                             photo = :photo, favorite_movie = :favorite_movie, favorite_book = :favorite_book where id = :id", userEntity);
         }
 
         public int DeleteById(int id)

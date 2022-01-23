@@ -29,11 +29,11 @@ namespace SocialNetwork.BLL.Services
             if (!new EmailAddressAttribute().IsValid(messageSendingData.RecipientEmail))
                 throw new ArgumentNullException();
             if (userRepository.FindByEmail(messageSendingData.RecipientEmail) == null)
-                throw new UserNotFoundException();
+                throw new MessageException("Пользователя с введенным email не существует");
             if (String.IsNullOrEmpty(messageSendingData.Content))
-                throw new ArgumentNullException();
+                throw new MessageException("Сообщение не должно быть пустым");
             if (messageSendingData.Content.Length > 5000)
-                throw new ArgumentNullException("Длина сообщения не должна превышать 5000 символов!");
+                throw new MessageException("Длина сообщения не должна превышать 5000 символов!");
 
             var messageEntity = new MessageEntity()
             {
@@ -42,7 +42,8 @@ namespace SocialNetwork.BLL.Services
                 recipientId = userRepository.FindByEmail(messageSendingData.RecipientEmail).id
             };
 
-            messageRepository.Create(messageEntity);
+            if(this.messageRepository.Create(messageEntity) == 0)
+                throw new Exception();
         }
 
         public IEnumerable<Message> GetIncomingMessagesByUserId(int recipient_Id)
