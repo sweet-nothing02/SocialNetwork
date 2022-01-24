@@ -15,6 +15,8 @@ namespace SocialNetwork.Tests
     public class FriendsTests
     {
         FriendsService friendsService;
+        // Тест почему-то так и не запустился( А еще у всего проекта теста был какой-то другой значок и надпись "отложенное добавление"...
+        // и надпись "отложенное добавление"... Мб из-за этого не запустился?
         [Fact]
         public void AddToFriendsMustThrowException()
         {
