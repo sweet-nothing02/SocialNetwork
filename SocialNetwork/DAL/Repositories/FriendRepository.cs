@@ -9,9 +9,11 @@ namespace SocialNetwork.DAL.Repositories
 {
     public class FriendRepository : BaseRepository, IFriendRepository
     {
+        // Криво-косо получилось реализовать двухстороннее добавление в друзья
         public IEnumerable<FriendEntity> FindAllByUserId(int userId)
         {
-            return Query<FriendEntity>(@"select * from friends where user_id = :user_id", new { user_id = userId });
+            return Query<FriendEntity>(@"select * from friends where user_id = :user_id 
+union select * from friends where friend_id = :user_id_p", new { user_id = userId, user_id_p = userId });
         }
 
         public int Create(FriendEntity friendEntity)

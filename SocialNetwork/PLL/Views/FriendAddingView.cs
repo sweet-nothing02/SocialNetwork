@@ -29,12 +29,6 @@ namespace SocialNetwork.PLL.Views
 
             friendAddingData.UserId = user.Id;
 
-            //friendsService.AddToFriends(friendAddingData);
-
-            //SuccessMessage.Show($"Пользователь с почтовым адресом {friendAddingData.FriendEmail} добавлен в друзья");
-
-            //user = userService.FindById(user.Id);
-
             try
             {
                 friendsService.AddToFriends(friendAddingData);
@@ -47,9 +41,9 @@ namespace SocialNetwork.PLL.Views
             {
                 AlertMessage.Show("Введено значение неверного формата...");
             }
-            catch (UserNotFoundException)
+            catch (FriendsException ex)
             {
-                AlertMessage.Show("Пользователь с");
+                AlertMessage.Show(ex.NewMessage);
             }
             catch (Exception)
             {

@@ -29,7 +29,9 @@ namespace SocialNetwork.BLL.Services
             if (!new EmailAddressAttribute().IsValid(friendAddingData.FriendEmail))
                 throw new ArgumentNullException();
             if (userRepository.FindByEmail(friendAddingData.FriendEmail) == null)
-                throw new UserNotFoundException();
+                throw new FriendsException("Пользователя с введенным email не существует...");
+            if (GetFriendsByUserId(friendAddingData.UserId).Any(f => f.FriendEmail == friendAddingData.FriendEmail) == true)
+                throw new FriendsException("Данный пользователь уже ваш друг!");
 
             var friendEntity = new FriendEntity()
             {
@@ -52,13 +54,25 @@ namespace SocialNetwork.BLL.Services
             friendRepository.Delete(userRepository.FindByEmail(email).id);
         }
 
+        // Криво-косо получилось реализовать двухстороннее добавление в друзья
         public IEnumerable<Friend> GetFriendsByUserId(int userId)
         {
             var friends = new List<Friend>();
 
             friendRepository.FindAllByUserId(userId).ToList().ForEach(f =>
-            friends.Add(new Friend(f.id, 
-            userRepository.FindById(f.user_id).email, userRepository.FindById(f.friend_id).email)));
+            {
+                if (userRepository.FindById(f.user_id).email == userRepository.FindById(userId).email)
+                {
+                    friends.Add(new Friend(f.id,
+            userRepository.FindById(f.user_id).email, userRepository.FindById(f.friend_id).email));
+                }
+                if(userRepository.FindById(f.friend_id).email == userRepository.FindById(userId).email)
+                {
+                    friends.Add(new Friend(f.id,
+            userRepository.FindById(f.friend_id).email, userRepository.FindById(f.user_id).email));
+                }
+            }
+            );
             
             return friends;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SocialNetwork.DAL.Entities
 {
     /// <summary>
-    /// Сущность друга
+    /// Сущность пары пользователей, являющимися друзьями
     /// </summary>
     public class FriendEntity
     {

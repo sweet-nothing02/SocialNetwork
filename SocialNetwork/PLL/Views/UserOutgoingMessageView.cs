@@ -1,4 +1,5 @@
 ﻿using SocialNetwork.BLL.Models;
+using SocialNetwork.PLL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,12 @@ namespace SocialNetwork.PLL.Views
         {
             if (outgoingMessages.Count() == 0)
             {
-                Console.WriteLine("Исходящих сообщений  нет...");
+                InfoMessage.Show("Исходящих сообщений  нет...");
                 System.Threading.Thread.Sleep(3000);
                 return;
             }
 
-            Console.WriteLine("Исходящие сообщения: ");
+            InfoMessage.Show("Исходящие сообщения: ");
 
             outgoingMessages.ToList().ForEach(m =>
             {

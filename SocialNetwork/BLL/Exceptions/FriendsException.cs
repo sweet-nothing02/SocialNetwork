@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Exceptions
 {
-    public class NetworkException : Exception
+    public class FriendsException : Exception
     {
         public string NewMessage { get; set; }
-
-        public NetworkException(string message)
+        public FriendsException(string message)
         {
-            NewMessage = message;
+            NewMessage = $"При добавлении в друзья произошла ошибка... ({message})";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
+using SocialNetwork.PLL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,8 @@ namespace SocialNetwork.PLL.Views
         {
             while (true)
             {
-                Console.WriteLine($"Входящие сообщения: {user.IncomingMessages.ToList().Count()}");
-                Console.WriteLine($"Исходящие сообщения: {user.OutgoingMessages.ToList().Count()}");
+                InfoMessage.Show($"Входящие сообщения: {user.IncomingMessages.Count()}");
+                InfoMessage.Show($"Исходящие сообщения: {user.OutgoingMessages.Count()}");
 
                 Console.WriteLine("Просмотреть информацию о моём профиле (нажмите 1)");
                 Console.WriteLine("Редактировать мой профиль (нажмите 2)");
@@ -31,11 +32,13 @@ namespace SocialNetwork.PLL.Views
                 Console.WriteLine("Написать сообщение (нажмите 5)");
                 Console.WriteLine("Просмотреть входящие сообщения (нажмите 6)");
                 Console.WriteLine("Просмотреть исходящие сообщения (нажмите 7)");
-                Console.WriteLine("Выйти из профиля (нажмите 8)");
+                AlertMessage.Show("Выйти из профиля (нажмите 8)");
+                AlertMessage.Show("Выйти (нажмите 9)");
 
                 string keyValue = Console.ReadLine();
 
                 if (keyValue == "8") break;
+                if (keyValue == "9") Environment.Exit(0);
 
                 switch (keyValue)
                 {
@@ -46,7 +49,7 @@ namespace SocialNetwork.PLL.Views
                         Program.userDataUpdateView.Show(user);
                         break;
                     case "3":
-                        Program.friendsView.Show(user.Friends, user);
+                        Program.friendsView.Show(user);
                         break;
                     case "4":
                         Program.friendAddingView.Show(user);

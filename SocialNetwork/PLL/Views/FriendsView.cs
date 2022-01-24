@@ -1,5 +1,6 @@
 ﻿using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
+using SocialNetwork.PLL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,16 @@ namespace SocialNetwork.PLL.Views
             this.userService = userService;
         }
 
-        public void Show(IEnumerable<Friend> friends, User user)
+        public void Show(User user)
         {
-            if(friends.Count() == 0)
+            if(user.Friends.Count() == 0)
             {
-                Console.WriteLine("У вас пока нет друзей...");
+                InfoMessage.Show("У вас пока нет друзей...");
                 return;
             }
 
-            Console.WriteLine("Мои друзья:");
-
-            friends.ToList().ForEach(f =>
+            InfoMessage.Show("Мои друзья:");
+            user.Friends.ToList().ForEach(f =>
             {
                 var fr = userService.FindByEmail(f.FriendEmail);
                 Console.WriteLine($"{fr.FirstName} {fr.LastName}, {fr.Email}");

@@ -61,10 +61,10 @@ namespace SocialNetwork.BLL.Services
         {
             var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
 
-            //if (findUserEntity is null) throw new UserNotFoundException();
+            if (findUserEntity is null) throw new AuthenticationException("Пользователя с введенным email не существует");
 
-            //if (findUserEntity.password != userAuthenticationData.Password)
-            //    throw new WrongPasswordException("gvgv");
+            if (findUserEntity.password != userAuthenticationData.Password)
+                throw new AuthenticationException("Неверный пароль!");
 
             return ConstructUserModel(findUserEntity);
         }
@@ -107,7 +107,6 @@ namespace SocialNetwork.BLL.Services
 
         private User ConstructUserModel(UserEntity userEntity)
         {
-            //!!!!!!!!!!!!!!!!!! Здесь по сути, профиль обновляется !!!!!!!!!!!!!!!!!
             var incomingMessages = messageService.GetIncomingMessagesByUserId(userEntity.id);
 
             var outgoingMessages = messageService.GetOutcomingMessagesByUserId(userEntity.id);
