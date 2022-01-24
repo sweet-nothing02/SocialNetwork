@@ -63,13 +63,13 @@ namespace SocialNetwork.BLL.Services
             {
                 if (userRepository.FindById(f.user_id).email == userRepository.FindById(userId).email)
                 {
-                    friends.Add(new Friend(f.id,
-            userRepository.FindById(f.user_id).email, userRepository.FindById(f.friend_id).email));
+                    friends.Add(new Friend(f.id, userRepository.FindById(f.user_id).email,
+                        userRepository.FindById(f.friend_id).email));
                 }
                 if(userRepository.FindById(f.friend_id).email == userRepository.FindById(userId).email)
                 {
-                    friends.Add(new Friend(f.id,
-            userRepository.FindById(f.friend_id).email, userRepository.FindById(f.user_id).email));
+                    friends.Add(new Friend(f.id, userRepository.FindById(f.friend_id).email,
+                        userRepository.FindById(f.user_id).email));
                 }
             }
             );
